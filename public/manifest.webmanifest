@@ -1,0 +1,19 @@
+{
+  "name": "VardiyaMatik - Vardiya Takvimi ve Mesai Hesaplama",
+  "short_name": "VardiyaMatik",
+  "description": "Vardiya takvimi, fazla mesai ve çalışma saati hesaplaması. Ücretsiz ve üyelik gerektirmez.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f8fc",
+  "theme_color": "#0b1631",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
