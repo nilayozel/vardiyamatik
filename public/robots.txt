@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://vardiyamatik.onrender.com/sitemap.xml
