@@ -1,0 +1,58 @@
+name: VardiyaMatik - SEO ve erisilebilirlik
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "public/**"
+      - "scripts/seo_automation.py"
+      - ".github/workflows/seo-automation.yml"
+  schedule:
+    - cron: "17 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sitemap:
+    name: Site haritasini otomatik guncelle
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Repoyu al
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Site haritasini olustur
+        run: |
+          python3 scripts/seo_automation.py sitemap
+          python3 scripts/seo_automation.py local
+      - name: Sadece degisiklik varsa kaydet
+        shell: bash
+        run: |
+          git add public/sitemap.xml
+          if ! git diff --cached --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "chore(seo): update sitemap [skip ci]"
+            git push
+          else
+            echo "Sitemap zaten guncel"
+          fi
+
+  live-audit:
+    name: Gunluk site ve SEO saglik kontrolu
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Repoyu al
+        uses: actions/checkout@v4
+      - name: Teknik SEO ve canli baglantilari denetle
+        shell: bash
+        run: |
+          python3 scripts/seo_automation.py audit | tee "$GITHUB_STEP_SUMMARY"
