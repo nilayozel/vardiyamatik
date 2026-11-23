@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Çalışma Saati Hesaplama | Mola ve Gece Vardiyası – VardiyaMatik</title>
+<meta name="description" content="Giriş ve çıkış saatini gir, mola süresini düşerek günlük net çalışma saatini hesapla. Gece vardiyası, haftalık ve aylık toplamları ücretsiz gör.">
+<link rel="canonical" href="https://vardiyamatik.onrender.com/calisma-saati-hesaplama.html">
+<meta name="theme-color" content="#0b1631">
+<style>
+:root{font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#172541;background:#f4f7fb}*{box-sizing:border-box}body{margin:0;line-height:1.55}a{color:#215ac9}header{background:#0b1631;color:#fff}nav{max-width:1060px;margin:auto;min-height:74px;display:flex;justify-content:space-between;align-items:center;padding:12px 22px;gap:18px}nav a{color:#fff;text-decoration:none}nav strong{font-size:23px}nav span{font-size:13px;color:#cad7ef}.wrap{max-width:1060px;margin:auto;padding:30px 22px 60px}.intro{max-width:850px}.eyebrow{color:#215ac9;font-size:12px;text-transform:uppercase;letter-spacing:.12em;font-weight:800}h1{font-size:clamp(29px,4vw,43px);line-height:1.16;letter-spacing:-.035em;margin:12px 0 16px}h2{margin:0 0 10px;font-size:23px}p{margin:8px 0 16px}.muted{color:#596b86}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px}.card{background:#fff;border:1px solid #dde6f1;border-radius:18px;padding:25px;box-shadow:0 6px 18px #142a4810}form{display:grid;grid-template-columns:1fr 1fr;gap:15px}label{font-size:13px;font-weight:700;display:block;margin:0 0 6px}input{width:100%;padding:13px 12px;border:1px solid #bfd0e3;border-radius:10px;background:#fff;color:#162a4b;font:inherit}input:focus{outline:3px solid #a3c0ff;border-color:#2858bf}.btn{background:#2455c7;border:none;border-radius:10px;color:white;padding:14px 18px;font-weight:800;cursor:pointer;grid-column:1/-1;font:inherit}.btn:hover{background:#173f9a}.result{background:linear-gradient(130deg,#0f2042,#153d86);color:white;display:flex;flex-direction:column;justify-content:center}.result h2,.result .muted{color:#d7e4ff}.output{font-size:36px;letter-spacing:-.04em;font-weight:850;margin:8px 0}.stats{display:grid;grid-template-columns:1fr 1fr;gap:11px}.stat{background:#ffffff13;border:1px solid #ffffff30;border-radius:12px;padding:12px}.stat span{display:block;color:#d6e4ff;font-size:13px}.stat strong{display:block;font-size:22px;margin-top:4px}.note{font-size:13px;color:#d9e5fb;margin-top:14px}.full{margin-top:22px}.full h2{font-size:22px}.full ul{padding-left:22px}.example{background:#f0f5ff;border-left:4px solid #3262d3;padding:14px 16px;border-radius:8px}.error{color:#ffd1d1;margin:12px 0 0;font-weight:700;min-height:22px}footer{background:#0b1631;color:#dce6f5;padding:28px 22px;font-size:13px}footer .inside{max-width:1060px;margin:auto}footer a{color:#e4ecff}@media(max-width:760px){.grid{grid-template-columns:1fr}.wrap{padding-top:22px}.card{padding:20px}nav span{display:none}.output{font-size:31px}}@media(max-width:390px){form{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><nav><a href="./"><strong>VardiyaMatik</strong></a><span>Ücretsiz vardiya ve çalışma araçları</span></nav></header>
+<main class="wrap">
+<section class="intro"><span class="eyebrow">Ücretsiz hesaplama aracı</span>
+<h1>Çalışma Saati Hesaplama</h1>
+<p class="muted">İşe giriş ve çıkış saatini, çalışmaya dahil olmayan mola süresini ve gün sayılarını yaz. Gece yarısını geçen vardiyalar dahil günlük, haftalık ve aylık <strong>net çalışma süreni</strong> hesapla.</p>
+</section>
+<section class="grid" aria-label="Çalışma süresi hesaplayıcı">
+<div class="card">
+<h2>Saatlerini gir</h2>
+<form id="calc">
+<div><label for="start">İşe giriş</label><input id="start" type="time" value="22:00" required></div>
+<div><label for="end">İşten çıkış</label><input id="end" type="time" value="06:00" required></div>
+<div><label for="breaks">Toplam mola (dakika)</label><input id="breaks" type="number" inputmode="numeric" min="0" max="1439" value="45" required></div>
+<div><label for="weekdays">Haftada çalışılan gün</label><input id="weekdays" type="number" inputmode="numeric" min="1" max="7" step="1" value="5" required></div>
+<div><label for="monthdays">Ayda çalışılan gün</label><input id="monthdays" type="number" inputmode="numeric" min="1" max="31" step="1" value="22" required></div>
+<button class="btn" type="submit">Çalışma süresini hesapla</button>
+</form>
+<p id="error" class="error" role="alert" aria-live="polite"></p>
+<p class="muted" style="font-size:13px">Giriş ve çıkış saati farklı olmalıdır. Çıkış girişten erken ise ertesi gün kabul edilir. En fazla 24 saatten kısa tek vardiya hesaplanır.</p>
+</div>
+<div class="card result">
+<h2>Hesaplama sonucu</h2>
+<span class="muted">Günlük net çalışma</span><div class="output" id="daily">7 saat 15 dakika</div>
+<div class="stats"><div class="stat"><span>Haftalık toplam</span><strong id="weekly">36 sa 15 dk</strong></div><div class="stat"><span>Aylık toplam</span><strong id="monthly">159 sa 30 dk</strong></div><div class="stat"><span>Günlük ondalık saat</span><strong id="decimal">7,25</strong></div><div class="stat"><span>Mola hariç brüt vardiya</span><strong id="gross">8 sa</strong></div></div>
+<p class="note">Hesap yalnızca verdiğin saatlerin matematiksel toplamıdır. Resmî bordro, iş hukuku hesabı veya fazla mesai tespiti değildir.</p>
+</div>
+</section>
+<section class="card full">
+<h2>Gece vardiyası çalışma süresi nasıl bulunur?</h2>
+<p>Önce vardiyanın toplam süresini bulur, ardından fiilen çalışma dışındaki molayı çıkarırsın. Çıkış saati girişten erkense çıkışı ertesi gün olarak değerlendiriyoruz.</p>
+<p class="example"><strong>Örnek:</strong> 22:00'de işe girip ertesi gün 06:00'da çıkarsan toplam vardiya süresi 8 saattir. 45 dakika mola düşüldüğünde <strong>7 saat 15 dakika</strong> net süre kalır. 5 aynı vardiya için haftalık toplam <strong>36 saat 15 dakika</strong> olur.</p>
+<h2>Haftalık ve aylık çalışma saati nasıl hesaplanır?</h2>
+<p>Bir vardiyanın net saati, haftada veya ayda aynı koşullarda çalıştığın gün sayısıyla çarpılır. Örneğin günde 7 saat 15 dakika çalışan biri, ayda 22 gün aynı düzende çalışırsa toplam 159 saat 30 dakika elde eder.</p>
+<p>Günlerin vardiya süresi veya mola süresi farklıysa bu çarpma yöntemi yerine her günü ayrı hesaplayıp toplamalısın. Yıllık izin, resmi tatil, ücret kesintisi ve özel mevzuat kuralları bu araçta değerlendirilmez.</p>
+<h2>Sık sorulan sorular</h2>
+<details><summary>Gece 00:00'ı geçen vardiya destekleniyor mu?</summary><p>Evet. Örneğin 23:00–07:00 arası 8 saat olarak değerlendirilir.</p></details>
+<details><summary>Mola çalışma saatine dahil mi?</summary><p>Bu araçta mola alanına girdiğin dakika, net süreden düşülür. Molanın ücretlendirilmesine ilişkin özel düzenlemeler bu hesaplamaya dahil değildir.</p></details>
+<details><summary>7 saat 15 dakika kaç ondalık saattir?</summary><p>7,25 saattir. Çünkü 15 dakika, bir saatin dörtte biridir.</p></details>
+<details><summary>Çalışma saatlerini kaydediyor musunuz?</summary><p>Hayır, bu sayfadaki saat hesapları doğrudan tarayıcıda çalışır. Girilen değerler sunucuya gönderilmez.</p></details>
+<p style="margin-top:20px"><a href="./"><strong>Vardiya takvimi oluştur</strong></a> · <a href="./hakkinda.html">VardiyaMatik hakkında</a></p>
+</section>
+</main>
+<footer><div class="inside">© VardiyaMatik · Ücretsiz hesaplama araçları · <a href="./gizlilik.html">Gizlilik</a></div></footer>
+<script>
+(()=>{
+'use strict';
+const byId=id=>document.getElementById(id);
+const parseTime=s=>{if(!/^\d{2}:\d{2}$/.test(s))return NaN;const [h,m]=s.split(':').map(Number);return h>=0&&h<=23&&m>=0&&m<=59?h*60+m:NaN;};
+const toText=minutes=>{const h=Math.floor(minutes/60),m=minutes%60;return h+' sa'+(m?' '+m+' dk':'');};
+const toLong=minutes=>{const h=Math.floor(minutes/60),m=minutes%60;return h+' saat'+(m?' '+m+' dakika':'');};
+const calc=()=>{
+const start=parseTime(byId('start').value),end=parseTime(byId('end').value);
+const pause=Number(byId('breaks').value),week=Number(byId('weekdays').value),month=Number(byId('monthdays').value);
+const diff=(end-start+1440)%1440;
+let error='';
+if(!Number.isFinite(start)||!Number.isFinite(end)||diff===0)error='Farklı ve geçerli giriş/çıkış saatleri gir.';
+else if(!Number.isInteger(pause)||pause<0||pause>=diff)error='Mola süresi sıfır veya vardiya süresinden küçük olmalı.';
+else if(!Number.isInteger(week)||week<1||week>7||!Number.isInteger(month)||month<1||month>31)error='Gün sayıları geçerli tam sayılar olmalı.';
+byId('error').textContent=error;
+if(error){['daily','weekly','monthly','decimal','gross'].forEach(id=>byId(id).textContent='—');return;}
+const net=diff-pause;
+byId('daily').textContent=toLong(net);
+byId('weekly').textContent=toText(net*week);
+byId('monthly').textContent=toText(net*month);
+byId('decimal').textContent=new Intl.NumberFormat('tr-TR',{maximumFractionDigits:3}).format(net/60);
+byId('gross').textContent=toText(diff);
+};
+byId('calc').addEventListener('submit',e=>{e.preventDefault();calc();});
+byId('calc').addEventListener('input',calc);
+calc();
+})();
+</script>
+</body></html>
